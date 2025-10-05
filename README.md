@@ -80,7 +80,7 @@ void loop() {
   moveBackward();
   delay(2000);
 
-  // 3. Turn Left
+  // 3. Turn Lefttt
   turnLeft();
   delay(1500);
 
