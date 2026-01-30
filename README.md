@@ -1,128 +1,83 @@
-# Smart-Agriculture-Bot
+# 🌱 Smart Agriculture Bot
 
-Data Transmitting Code
-#include <HardwareSerial.h>
+An **ESP32 + LoRa based autonomous agriculture robot** designed for **long-range soil moisture monitoring and remote navigation**. The system enables real-time environmental sensing and wireless data transmission for smart farming applications.
 
-HardwareSerial E22Serial(1);  // UART1
+---
 
-// Motor Pins
-#define IN1 4
-#define IN2 5
-#define IN3 18
-#define IN4 19
+## 🚜 Problem Statement
+Traditional farming lacks real-time soil monitoring across large fields. Manual checking is time-consuming and inefficient. This project provides a **low-cost autonomous system** that monitors soil moisture and transmits data wirelessly over long distances.
 
-// Second Motor Driver Pins
-#define IN5 12
-#define IN6 13
+---
 
-#define SOIL_PIN 34  // Analog input pin for sensor
+## 🧠 System Overview
 
-void turnRight() {
-  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
-  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
-}
+The robot moves across the field while collecting soil moisture data. Sensor readings are transmitted using **LoRa communication** to a remote receiver for monitoring.
 
-void turnLeft() {
-  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
-}
+### Main Functional Blocks
+- Soil Moisture Sensing  
+- ESP32 Data Processing  
+- LoRa Long-Range Communication  
+- Motor Control for Robot Movement  
+- Battery-Powered Field Deployment  
 
-void moveForward() {
-  digitalWrite(IN1, LOW); digitalWrite(IN2, HIGH);
-  digitalWrite(IN3, HIGH); digitalWrite(IN4, LOW);
-}
+---
 
-void moveBackward() {
-  digitalWrite(IN1, HIGH); digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW); digitalWrite(IN4, HIGH);
-}
+## 🔧 Hardware Components
 
-void stopBot() {
-  digitalWrite(IN1, LOW); digitalWrite(IN2, LOW);
-  digitalWrite(IN3, LOW); digitalWrite(IN4, LOW);
-}
+| Component | Purpose |
+|----------|---------|
+| ESP32 | Main microcontroller for processing and communication |
+| LoRa Module | Long-range wireless data transmission |
+| Soil Moisture Sensor | Measures soil water content |
+| L298N Motor Driver | Controls DC motors for navigation |
+| DC Motors + Chassis | Robot movement |
+| 12V Battery | Portable field power source |
+| Voltage Regulator | Stable power for electronics |
 
-// Second motor control
-void secondMotorForward() {
-  digitalWrite(IN5, HIGH);
-  digitalWrite(IN6, LOW);
-}
+---
 
-void secondMotorBackward() {
-  digitalWrite(IN5, LOW);
-  digitalWrite(IN6, HIGH);
-}
+## ⚙️ Working Principle
 
-void secondMotorStop() {
-  digitalWrite(IN5, LOW);
-  digitalWrite(IN6, LOW);
-}
+1. Soil moisture sensor collects analog data  
+2. ESP32 reads and processes sensor values  
+3. Data is transmitted wirelessly via LoRa  
+4. Robot movement is controlled using motor driver  
+5. System operates on a regulated battery supply for field use  
 
-void setup() {
-  Serial.begin(115200);
-  E22Serial.begin(9600, SERIAL_8N1, 16, 17);  // RX2, TX2
+---
 
-  pinMode(IN1, OUTPUT); pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT); pinMode(IN4, OUTPUT);
-  pinMode(IN5, OUTPUT); pinMode(IN6, OUTPUT);
-  pinMode(SOIL_PIN, INPUT);
+## 📡 Communication
 
-  delay(1000);
-  Serial.println("Bot + Sensor + LoRa Sender Ready");
-}
+LoRa is used for **long-range, low-power wireless communication**, making the system suitable for large agricultural lands.
 
-void loop() {
-  // 1. Move Forward
-  moveForward();
-  delay(2000);
+---
 
-  // 2. Move Backward
-  moveBackward();
-  delay(2000);
+## 🧪 Results
 
-  // 3. Turn Lefttt
-  turnLeft();
-  delay(1500);
+- Successful soil moisture monitoring  
+- Reliable long-range LoRa data transmission  
+- Stable robot movement using L298N motor control  
+- Low-power operation suitable for outdoor deployment  
 
-  // 4. Turn Right
-  turnRight();
-  delay(1500);
+---
 
-  // 5. Stop
-  stopBot();
-  delay(1000);
+## 🔮 Future Improvements
 
-  // 6. Read Soil Sensor
-  int soilValue = analogRead(SOIL_PIN);
+- GPS-based autonomous navigation  
+- Solar charging system  
+- Multiple sensor integration (temperature, humidity)  
+- Cloud-based data logging  
 
-  // 7. Send over LoRa
-  String msg = "Soil Moisture: " + String(soilValue);
-  E22Serial.println(msg);
-  Serial.println("Sent via LoRa: " + msg);
+---
 
-  delay(3000);  // Short wait before repeating
-}
+## 📂 Project Documentation
 
+Project report and diagrams will be available in the `/docs` folder.
 
+---
 
-Data Receiving Code
-#include <HardwareSerial.h>
+## 👨‍💻 Author
 
-HardwareSerial E22Serial(1);  // UART1
-
-void setup() {
-  Serial.begin(115200);
-  E22Serial.begin(9600, SERIAL_8N1, 16, 17);  // RX2, TX2
-  Serial.println("LoRa Receiver Ready");
-}
-
-void loop() {
-  if (E22Serial.available()) {
-    String msg = E22Serial.readStringUntil('\n');
-    Serial.print("Received: ");
-    Serial.println(msg);
-  }
-}
-
-
-  
+**Hrushikesh Singarapu**  
+Electronics & Communication Engineering  
+Embedded Systems | VLSI | Hardware Design
